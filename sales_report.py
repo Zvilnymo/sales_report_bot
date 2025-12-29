@@ -13,7 +13,7 @@ except ImportError:
     from backports.zoneinfo import ZoneInfo  # pip install backports.zoneinfo
 
 
-b24 = B24(domain="ua.zvilnymo.com.ua", user_id=596, token="wo0wme6ciueuv8cf")
+b24 = B24(domain=os.getenv("B24_DOMAIN"), user_id=int(os.getenv("B24_USER_ID")), token=os.getenv("B24_TOKEN_1"))
 
 category_id = 0
 
@@ -32,7 +32,7 @@ deals = b24.get_list("crm.deal.list", b24_filter=deal_filter, select=select_fiel
 deals_list = pd.DataFrame(deals)
 
 #Выгружаем данные по менеджерам из СRM
-b24 = B24('ua.zvilnymo.com.ua', 596, 'vt8sovzu4o2y28j7')
+b24 = B24(os.getenv("B24_DOMAIN"), int(os.getenv("B24_USER_ID")), os.getenv("B24_TOKEN_2"))
 items_users = b24.get_list('user.get', select=['ID','NAME', 'LAST_NAME', 'SECOND_NAME'])
 users_df = pd.DataFrame(items_users)[['ID', 'NAME', 'LAST_NAME', 'SECOND_NAME']]
 users_df['FULL_NAME'] = users_df[['NAME', 'LAST_NAME', 'SECOND_NAME']].fillna('').agg(' '.join, axis=1).str.strip()
